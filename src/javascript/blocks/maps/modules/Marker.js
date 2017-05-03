@@ -1,3 +1,5 @@
+/** global: google */
+
 class Marker {
 
     constructor(options = {}, map) {

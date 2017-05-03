@@ -8,7 +8,7 @@ class App {
             api: document.querySelector('meta[property="maps:key"]').getAttribute('content'),
             instances: [],
             init: () => {
-                [].forEach.call(document.querySelectorAll('*[data-module="google-map"]'), (container, index) => {
+                [].forEach.call(document.querySelectorAll('*[data-module="google-map"]'), container => {
                     let instanceId = createRandomId();
                     let options = container.getAttribute('data-options');
 

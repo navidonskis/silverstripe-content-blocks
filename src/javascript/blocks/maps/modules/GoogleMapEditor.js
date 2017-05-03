@@ -1,3 +1,5 @@
+/** global: google */
+
 import {createNavigationButton} from '../functions/createNavigationButton';
 import {createAddnewContainer} from '../functions/createAddnewContainer';
 import {createEditorContainer} from '../functions/createEditorContainer';

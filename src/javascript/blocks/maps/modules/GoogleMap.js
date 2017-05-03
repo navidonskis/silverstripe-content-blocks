@@ -1,3 +1,5 @@
+/** global: google */
+
 import Marker from './Marker';
 import {createRandomId} from '../functions/createRandomId';
 
