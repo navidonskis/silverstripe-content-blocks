@@ -1,0 +1,48 @@
+en:
+  BaseBlock:
+    PLURALNAME: 'Content Blocks'
+    SINGULARNAME: 'Content Block'
+  ContentImageBlock:
+    BOTTOM_IMAGE_LIST_TOP_CONTENT: 'Bottom image list top content'
+    BOTTOM_IMAGE_TOP_CONTENT: 'Bottom image top content'
+    CHOOSE_TEMPLATE: 'Choose a template'
+    FULL_WIDTH_IMAGE_LEFT_CONTENT: 'Full width image left content'
+    IMAGES: Images
+    LEFT_BIGGER_IMAGE_RIGHT_CONTENT: 'Left bigger image right content'
+    LEFT_BIGGER_IMAGE_RIGHT_CONTENT_WRAP: 'Left bigger image right content wrap'
+    LEFT_IMAGE_RIGHT_CONTENT: 'Left image right content'
+    LEFT_IMAGE_RIGHT_CONTENT_WRAP: 'Left image right content wrap'
+    PLURALNAME: 'Content Image Blocks'
+    RIGHT_BIGGER_IMAGE_LEFT_CONTENT: 'Right bigger image left content'
+    RIGHT_BIGGER_IMAGE_LEFT_CONTENT_WRAP: 'Right bigger image left content wrap'
+    RIGHT_IMAGE_LEFT_CONTENT: 'Right image left content'
+    RIGHT_IMAGE_LEFT_CONTENT_WRAP: 'Right image left content wrap'
+    SINGULARNAME: 'Content Image Block'
+    TEMPLATE: Template
+    TOP_IMAGE_BOTTOM_CONTENT: 'Top image bottom content'
+    TOP_IMAGE_LIST_BOTTOM_CONTENT: 'Top image list bottom content'
+  GoogleMapField:
+    CLOSE: Close
+    CONTENT: Content
+    DELETE: Delete
+    DISPLAY_INFO: 'Display content info window?'
+    EDIT_MARKER: 'Edit marker'
+    SAVE: Save
+    TYPE_AN_ADDRESS: 'Type an address'
+  MapBlock:
+    MARKER_RIGHT_TITLE: 'Set a global marker image'
+    Marker: Marker
+    PLURALNAME: 'Map Blocks'
+    SINGULARNAME: 'Map Block'
+  MapsSiteConfig:
+    GOOGLE_MAPS_API_KEY: 'Google maps API key'
+  Marker:
+    ADDRESS: Address
+    BLOCK: Block
+    CONTENT: Content
+    COORDINATES: Coordinates
+    DISPLAY_WINDOW: 'Display content in window popup?'
+    INSTANCE_ID: 'Instance Id'
+    MARKER: Marker
+    PLURALNAME: Markers
+    SINGULARNAME: Marker
