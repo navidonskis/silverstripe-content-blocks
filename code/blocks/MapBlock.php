@@ -108,7 +108,7 @@ class MapBlock extends BaseBlock {
     }
 
     /**
-     * @return string
+     * @return HTMLText
      */
     public function forTemplate() {
         Requirements::javascript(CONTENT_BLOCKS_DIR.'/assets/javascript/maps-frontend.js');
