@@ -1,7 +1,7 @@
 <?php
 
 /**
- * @author    Donatas Navidonskis <donatas@pixelneat.com>
+ * @author    Donatas Navidonskis <donatas@navidonskis.com>
  * @since     2017
  * @class     MapsSiteTree
  *

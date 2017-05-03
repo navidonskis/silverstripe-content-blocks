@@ -1,12 +1,14 @@
 <?php
 
+namespace ContentBlocks;
+
 /**
- * @author    Donatas Navidonskis <donatas@pixelneat.com>
+ * @author    Donatas Navidonskis <donatas@navidonskis.com>
  * @since     2017
  * @class     MapsSiteConfig
  *
  */
-class MapsSiteConfig extends DataExtension {
+class MapsSiteConfig extends \DataExtension {
 
     /**
      * @var array
@@ -17,7 +19,7 @@ class MapsSiteConfig extends DataExtension {
     ];
 
     public function updateCMSFields(FieldList $fields) {
-        $fields->addFieldToTab('Root.Main', TextField::create(
+        $fields->addFieldToTab('Root.Main', \TextField::create(
             'GoogleMapsApiKey',
             _t('MapsSiteConfig.GOOGLE_MAPS_API_KEY', 'Google maps API key')
         ));

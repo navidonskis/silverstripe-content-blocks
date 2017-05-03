@@ -59,7 +59,7 @@ class BaseBlock extends ContentBlock {
      * @return string
      **/
     public function forTemplate() {
-        if (BaseBlock::config()->default_styles) {
+        if (static::config()->default_styles) {
             Requirements::css(sprintf('%s/assets/styles/app.css', CONTENT_BLOCKS_DIR));
         }
 

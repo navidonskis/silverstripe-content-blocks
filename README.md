@@ -22,3 +22,12 @@ Accessories for [Blocks](https://github.com/sheadawson/silverstripe-blocks) modu
             - BaseBlock # this should be always set
             - ContentImageBlock # this extra block to be hidden
 ```
+
+## Contributing
+
+To contributing a module [read here](docs/CONTRIBUTING.md) for compliance with the rules and understand how it's working. If you have any questions, feel free to ask maintainer of Donatas <donatas@navidonskis.com>.
+
+## TODO
+
+ 1. Each class should be in namespace, but waiting when [silverstripe-gridfieldextensions](https://github.com/silverstripe-australia/silverstripe-gridfieldextensions) their support the namespace'd class'es when creating a new block.
+ 2. 

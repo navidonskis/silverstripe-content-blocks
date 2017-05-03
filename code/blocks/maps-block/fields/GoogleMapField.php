@@ -1,7 +1,7 @@
 <?php
 
 /**
- * @author    Donatas Navidonskis <donatas@pixelneat.com>
+ * @author    Donatas Navidonskis <donatas@navidonskis.com>
  * @since     2017
  * @class     GoogleMapField
  *
@@ -54,10 +54,10 @@ class GoogleMapField extends FormField {
     /**
      * GoogleMapField constructor.
      *
-     * @param string       $name
-     * @param MapBlock     $block
+     * @param string        $name
+     * @param MapBlock      $block
      * @param SS_List|null $markers
-     * @param array        $options
+     * @param array         $options
      */
     public function __construct($name, MapBlock $block, SS_List $markers = null, $options = []) {
         if (array_key_exists('api', $options)) {
@@ -185,6 +185,13 @@ class GoogleMapField extends FormField {
         return false;
     }
 
+    /**
+     * Action to delete markers. Should be triggered InstanceId of marker.
+     *
+     * @param SS_HTTPRequest $request
+     *
+     * @return void
+     */
     public function deleteMarkers(SS_HTTPRequest $request) {
         $data = $request->getVars();
 
@@ -194,6 +201,13 @@ class GoogleMapField extends FormField {
         }
     }
 
+    /**
+     * Action to update markers. Should be triggered InstanceId and other fields which has @see Marker has.
+     *
+     * @param SS_HTTPRequest $request
+     *
+     * @return void
+     */
     public function updateMarkers(SS_HTTPRequest $request) {
         $data = $request->getVars();
 
@@ -221,6 +235,13 @@ class GoogleMapField extends FormField {
         }
     }
 
+    /**
+     * Action to update zoom in/out changes.
+     *
+     * @param SS_HTTPRequest $request
+     *
+     * @return void
+     */
     public function zoomChanged(SS_HTTPRequest $request) {
         $data = $request->getVars();
 
@@ -231,6 +252,13 @@ class GoogleMapField extends FormField {
         }
     }
 
+    /**
+     * Action to update coordinates changes.
+     *
+     * @param SS_HTTPRequest $request
+     *
+     * @return void
+     */
     public function coordinatesChanged(SS_HTTPRequest $request) {
         $data = $request->getVars();
 
