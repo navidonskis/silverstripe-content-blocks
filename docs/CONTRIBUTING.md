@@ -12,6 +12,28 @@ code/
 │   └───pages/
 ```
 
+create a new file `code/blocks/your-block-name/models/YourBlockName.php`
+
+```php
+    class YourBlockName extends BaseBlock {
+        
+        /**
+         * @return string
+         */
+        public function singular_name() {
+            return _t('YourBlockName.SINGULARNAME', 'Your Block Name');
+        }
+    
+        /**
+         * @return string
+         */
+        public function plural_name() {
+            return _t('YourBlockName.PLURALNAME', 'Your Block Names');
+        }
+            
+    }
+```
+
 For Javascript and SASS (CSS). First run `npm install` to download all dependencies. Next - run `gulp` for one time build or `gulp watch` to watch your files changes.
 
 ```
