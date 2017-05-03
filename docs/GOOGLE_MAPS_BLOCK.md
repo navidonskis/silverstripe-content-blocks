@@ -1,6 +1,6 @@
 # Google Maps Block
 
-![](docs/images/maps-block-01.png)
+![](images/maps-block-01.png)
 
 ## Set an API key
 
@@ -56,8 +56,8 @@ One more good feature are to set your map styles (json) and handle it to the sta
 
 ## Screenshots
 
-![](docs/images/maps-block-01.png)
-![](docs/images/maps-block-02.png)
-![](docs/images/maps-block-03.png)
-![](docs/images/maps-block-04.png)
-![](docs/images/maps-block-05.png)
+![](images/maps-block-01.png)
+![](images/maps-block-02.png)
+![](images/maps-block-03.png)
+![](images/maps-block-04.png)
+![](images/maps-block-05.png)
