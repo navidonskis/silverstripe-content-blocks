@@ -6,7 +6,7 @@
  * @class     GoogleMapField
  *
  */
-class GoogleMapField extends FormField {
+class GoogleMapField extends \FormField {
 
     /**
      * @var array
@@ -56,10 +56,10 @@ class GoogleMapField extends FormField {
      *
      * @param string        $name
      * @param MapBlock      $block
-     * @param SS_List|null $markers
+     * @param \SS_List|null $markers
      * @param array         $options
      */
-    public function __construct($name, MapBlock $block, SS_List $markers = null, $options = []) {
+    public function __construct($name, MapBlock $block, \SS_List $markers = null, $options = []) {
         if (array_key_exists('api', $options)) {
             $this->setApi($options['api']);
             unset($options['api']);
@@ -106,8 +106,8 @@ class GoogleMapField extends FormField {
             static::config()->options,
             [
                 'translations' => $this->getTranslations(),
-                'sprite'       => Controller::join_links(
-                    Director::absoluteBaseURL(),
+                'sprite'       => \Controller::join_links(
+                    \Director::absoluteBaseURL(),
                     CONTENT_BLOCKS_DIR,
                     '/assets/images/sprite.png'
                 ),
@@ -135,7 +135,7 @@ class GoogleMapField extends FormField {
      * @return string
      */
     public function getOptions() {
-        return Convert::raw2att(Convert::array2json(
+        return \Convert::raw2att(\Convert::array2json(
             static::array_keys_to_objects(static::config()->options)
         ));
     }
@@ -179,7 +179,7 @@ class GoogleMapField extends FormField {
                 ];
             }, $markers);
 
-            return Convert::raw2att(Convert::array2json($markers));
+            return \Convert::raw2att(\Convert::array2json($markers));
         }
 
         return false;
@@ -188,11 +188,11 @@ class GoogleMapField extends FormField {
     /**
      * Action to delete markers. Should be triggered InstanceId of marker.
      *
-     * @param SS_HTTPRequest $request
+     * @param \SS_HTTPRequest $request
      *
      * @return void
      */
-    public function deleteMarkers(SS_HTTPRequest $request) {
+    public function deleteMarkers(\SS_HTTPRequest $request) {
         $data = $request->getVars();
 
         if (isset($data['InstanceId']) && (($marker = $this->block->Markers()->filter('InstanceId', $data['InstanceId'])) && $marker->exists())) {
@@ -204,11 +204,11 @@ class GoogleMapField extends FormField {
     /**
      * Action to update markers. Should be triggered InstanceId and other fields which has @see Marker has.
      *
-     * @param SS_HTTPRequest $request
+     * @param \SS_HTTPRequest $request
      *
      * @return void
      */
-    public function updateMarkers(SS_HTTPRequest $request) {
+    public function updateMarkers(\SS_HTTPRequest $request) {
         $data = $request->getVars();
 
         if (array_key_exists('InstanceId', $data)) {
@@ -238,11 +238,11 @@ class GoogleMapField extends FormField {
     /**
      * Action to update zoom in/out changes.
      *
-     * @param SS_HTTPRequest $request
+     * @param \SS_HTTPRequest $request
      *
      * @return void
      */
-    public function zoomChanged(SS_HTTPRequest $request) {
+    public function zoomChanged(\SS_HTTPRequest $request) {
         $data = $request->getVars();
 
         if (array_key_exists('zoom', $data)) {
@@ -255,11 +255,11 @@ class GoogleMapField extends FormField {
     /**
      * Action to update coordinates changes.
      *
-     * @param SS_HTTPRequest $request
+     * @param \SS_HTTPRequest $request
      *
      * @return void
      */
-    public function coordinatesChanged(SS_HTTPRequest $request) {
+    public function coordinatesChanged(\SS_HTTPRequest $request) {
         $data = $request->getVars();
 
         if (array_key_exists('coordinates', $data)) {

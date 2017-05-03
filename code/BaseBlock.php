@@ -14,7 +14,7 @@
  * @property string  Area
  * @property boolean Published
  */
-class BaseBlock extends ContentBlock {
+class BaseBlock extends \ContentBlock {
 
     /**
      * Default directory to upload your files.
@@ -60,18 +60,18 @@ class BaseBlock extends ContentBlock {
      **/
     public function forTemplate() {
         if (static::config()->default_styles) {
-            Requirements::css(sprintf('%s/assets/styles/app.css', CONTENT_BLOCKS_DIR));
+            \Requirements::css(sprintf('%s/assets/styles/app.css', CONTENT_BLOCKS_DIR));
         }
 
         if ($this->BlockArea) {
             $template = [$this->class.'_'.$this->BlockArea];
 
-            if (SSViewer::hasTemplate($template)) {
+            if (\SSViewer::hasTemplate($template)) {
                 return $this->renderWith($template);
             }
         }
 
-        if (SSViewer::hasTemplate($path = "blocks/{$this->ClassName}")) {
+        if (\SSViewer::hasTemplate($path = "blocks/{$this->ClassName}")) {
             return $this->renderWith($path, $this->getController());
         }
 
@@ -100,6 +100,6 @@ class BaseBlock extends ContentBlock {
      * @return string
      */
     public function getBlockName() {
-        return strtolower(str_replace(' ', '-', FormField::name_to_label($this->ClassName)));
+        return strtolower(str_replace(' ', '-', \FormField::name_to_label($this->ClassName)));
     }
 }

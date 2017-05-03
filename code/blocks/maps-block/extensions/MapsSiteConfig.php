@@ -1,7 +1,5 @@
 <?php
 
-namespace ContentBlocks;
-
 /**
  * @author    Donatas Navidonskis <donatas@navidonskis.com>
  * @since     2017

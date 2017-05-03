@@ -6,13 +6,13 @@
  * @class     MapsSiteTree
  *
  */
-class MapsSiteTree extends DataExtension {
+class MapsSiteTree extends \DataExtension {
 
     public function MetaTags(&$tags) {
-        $api = GoogleMapField::config()->api;
+        $api = \GoogleMapField::config()->api;
 
         if (empty($api)) {
-            $api = SiteConfig::current_site_config()->GoogleMapsApiKey;
+            $api = \SiteConfig::current_site_config()->GoogleMapsApiKey;
         }
 
         if (! empty($api)) {

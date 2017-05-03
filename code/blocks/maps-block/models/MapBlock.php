@@ -80,7 +80,7 @@ class MapBlock extends BaseBlock {
     }
 
     /**
-     * @return FieldList
+     * @return \FieldList
      */
     public function getCMSFields() {
         $fields = parent::getCMSFields();
@@ -89,13 +89,13 @@ class MapBlock extends BaseBlock {
         $coordinates = $this->getCoordinatesAsOption();
 
         $fields->addFieldsToTab('Root.Main', [
-            $marker = UploadField::create('GlobalMarker', _t('MapBlock.Marker', 'Marker')),
+            $marker = \UploadField::create('GlobalMarker', _t('MapBlock.Marker', 'Marker')),
             GoogleMapField::create(
                 'GoogleMap',
                 $this,
                 $this->Markers(),
                 [
-                    'api' => SiteConfig::current_site_config()->GoogleMapsApiKey,
+                    'api' => \SiteConfig::current_site_config()->GoogleMapsApiKey,
                     'map' => array_merge(
                         [
                             'zoom' => (int) $this->ZoomLevel,
@@ -118,10 +118,10 @@ class MapBlock extends BaseBlock {
     }
 
     /**
-     * @return HTMLText
+     * @return \HTMLText
      */
     public function forTemplate() {
-        Requirements::javascript(CONTENT_BLOCKS_DIR.'/assets/javascript/maps-frontend.js');
+        \Requirements::javascript(CONTENT_BLOCKS_DIR.'/assets/javascript/maps-frontend.js');
 
         return parent::forTemplate();
     }
@@ -152,7 +152,7 @@ class MapBlock extends BaseBlock {
                 ], $markerImage);
             }
 
-            return Convert::raw2att(Convert::array2json($list));
+            return \Convert::raw2att(\Convert::array2json($list));
         }
 
         return false;
@@ -197,7 +197,7 @@ class MapBlock extends BaseBlock {
         }
 
         if (count($data)) {
-            return Convert::raw2att(Convert::array2json($data));
+            return \Convert::raw2att(\Convert::array2json($data));
         }
 
         return false;

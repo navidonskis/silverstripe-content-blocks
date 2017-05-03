@@ -7,7 +7,7 @@
  *
  * @property string Template
  *
- * @method DataList Images
+ * @method \DataList Images
  */
 class ContentImageBlock extends BaseBlock {
 
@@ -84,7 +84,7 @@ class ContentImageBlock extends BaseBlock {
         $fileSource = sprintf('%s/assets/images/content-image-block', CONTENT_BLOCKS_DIR);
 
         foreach ($templates as $type) {
-            $types[$type] = sprintf('%s/%s.png', $fileSource, str_replace(' ', '-', strtolower(FormField::name_to_label($type))));
+            $types[$type] = sprintf('%s/%s.png', $fileSource, str_replace(' ', '-', strtolower(\FormField::name_to_label($type))));
         }
 
         return $currentType !== null && array_key_exists($currentType, $types) ? $types[$currentType] : $types;
@@ -100,7 +100,7 @@ class ContentImageBlock extends BaseBlock {
     }
 
     /**
-     * @return FieldList
+     * @return \FieldList
      */
     public function getCMSFields() {
         $fields = parent::getCMSFields();
@@ -109,11 +109,11 @@ class ContentImageBlock extends BaseBlock {
         $fields->findOrMakeTab('Root.Images', $this->fieldLabel('Images'));
 
         $fields->addFieldsToTab('Root.Template', [
-            OptionsetField::create('Template', $this->fieldLabel('ChooseTemplate'), $this->getTemplateOptions(), $this->Template)->addExtraClass('content-image-block-cms'),
+            \OptionsetField::create('Template', $this->fieldLabel('ChooseTemplate'), $this->getTemplateOptions(), $this->Template)->addExtraClass('content-image-block-cms'),
         ]);
 
         $fields->addFieldsToTab('Root.Images', [
-            SortableUploadField::create('Images', $this->fieldLabel('Images'))
+            \SortableUploadField::create('Images', $this->fieldLabel('Images'))
                                ->setAllowedFileCategories('image')
                                ->setFolderName($this->getUploadDirectory()),
         ]);
@@ -154,12 +154,12 @@ class ContentImageBlock extends BaseBlock {
         $options = [];
 
         foreach ($this->getTemplateTypes() as $type => $fileName) {
-            if (Director::fileExists($fileName)) {
+            if (\Director::fileExists($fileName)) {
                 $thumbnail = "<img src=\"{$fileName}\" title=\"{$this->fieldLabel($type)}\" class=\"content-image-block-cms__thumbnail--picture\" />";
                 $content = "<div class=\"content-image-block-cms__thumbnail\">{$thumbnail}</div>";
                 $content .= "<p class=\"content-image-block-cms__thumbnail--right-title\">{$this->fieldLabel($type)}</p>";
 
-                $options[$type] = DBField::create_field("HTMLText", $content);
+                $options[$type] = \DBField::create_field("HTMLText", $content);
             }
         }
 
@@ -167,11 +167,11 @@ class ContentImageBlock extends BaseBlock {
     }
 
     /**
-     * @return HTMLText
+     * @return \HTMLText
      */
     public function forTemplate() {
         if (BaseBlock::config()->default_styles) {
-            Requirements::css(sprintf('%s/assets/styles/app.css', CONTENT_BLOCKS_DIR));
+            \Requirements::css(sprintf('%s/assets/styles/app.css', CONTENT_BLOCKS_DIR));
         }
 
         return $this->renderWith($this->ClassName, [
@@ -180,7 +180,7 @@ class ContentImageBlock extends BaseBlock {
     }
 
     /**
-     * @return bool|Image
+     * @return bool|\Image
      */
     public function getFirstImage() {
         $image = $this->Images()->sort('SortOrder', 'ASC')->first();

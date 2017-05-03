@@ -14,9 +14,9 @@
  * @property boolean DisplayWindow
  *
  * @method MapBlock Block
- * @method Image Marker
+ * @method \Image Marker
  */
-class Marker extends DataObject {
+class Marker extends \DataObject {
 
     /**
      * @var array
@@ -51,19 +51,19 @@ class Marker extends DataObject {
     }
 
     /**
-     * @return FieldList
+     * @return \FieldList
      */
     public function getCMSFields() {
         $fields = parent::getCMSFields();
 
         $fields->addFieldsToTab('Root.Main', [
-            $instanceId = TextField::create('InstanceId', $this->fieldLabel('InstanceId')),
-            $address = TextField::create('Address', $this->fieldLabel('Address')),
-            $content = HtmlEditorField::create('Content', $this->fieldLabel('Content')),
-            $coordinates = TextField::create('Coordinates', $this->fieldLabel('Coordinates')),
-            $displayWindow = CheckboxField::create('DisplayWindow', $this->fieldLabel('DisplayWindow')),
-            $block = DropdownField::create('BlockID', $this->fieldLabel('Block'), MapBlock::get()->map()),
-            $marker = UploadField::create('Marker', $this->fieldLabel('Marker')),
+            $instanceId = \TextField::create('InstanceId', $this->fieldLabel('InstanceId')),
+            $address = \TextField::create('Address', $this->fieldLabel('Address')),
+            $content = \HtmlEditorField::create('Content', $this->fieldLabel('Content')),
+            $coordinates = \TextField::create('Coordinates', $this->fieldLabel('Coordinates')),
+            $displayWindow = \CheckboxField::create('DisplayWindow', $this->fieldLabel('DisplayWindow')),
+            $block = \DropdownField::create('BlockID', $this->fieldLabel('Block'), MapBlock::get()->map()),
+            $marker = \UploadField::create('Marker', $this->fieldLabel('Marker')),
         ]);
 
         $marker
