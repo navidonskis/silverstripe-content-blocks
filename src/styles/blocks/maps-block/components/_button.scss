@@ -1,0 +1,42 @@
+button,
+*[type="button"],
+*[role="button"],
+.button {
+  height: 45px;
+  padding: 0 20px;
+  background: #FFFFFF;
+  border: none;
+  outline: none;
+  cursor: pointer;
+
+  -webkit-transition: all 0.30s ease-in-out;
+  -moz-transition: all 0.30s ease-in-out;
+  -ms-transition: all 0.30s ease-in-out;
+  -o-transition: all 0.30s ease-in-out;
+
+  &:focus,
+  &:hover {
+    background: #CECECE;
+    color: #FFFFFF;
+  }
+
+  &.delete {
+    background: #ea4335;
+    color: #FFFFFF;
+
+    &:focus,
+    &:hover {
+      background: lighten(#ea4335, 10);
+    }
+  }
+
+  &.save {
+    background: #34a853;
+    color: #FFFFFF;
+
+    &:focus,
+    &:hover {
+      background: lighten(#34a853, 10);
+    }
+  }
+}

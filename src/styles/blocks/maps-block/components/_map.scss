@@ -1,0 +1,57 @@
+.gmnoprint.gm-bundled-control.gm-bundled-control-on-bottom {
+  bottom: 130px !important;
+
+  > .gmnoprint:first-child {
+    > div {
+      height: 90.5px !important;
+    }
+  }
+}
+
+.maps-editor {
+  &__add-marker-container {
+    position: relative;
+    width: 28px;
+    height: 34px;
+    left: 0px;
+    top: 0px;
+
+    &:hover {
+      .maps-editor__add-new-marker {
+        left: -29px;
+      }
+    }
+  }
+
+  &__add-marker-subcontainer {
+    overflow: hidden;
+    position: absolute;
+    width: 21px;
+    height: 24px;
+    left: 2px;
+    top: 6px;
+  }
+
+  &__separator {
+    position: relative;
+    overflow: hidden;
+    width: 67%;
+    height: 1px;
+    left: 16%;
+    background-color: rgb(230, 230, 230);
+    top: 0px;
+  }
+
+  &__add-new-marker {
+    position: absolute;
+    left: 3px;
+    top: 0px;
+    user-select: none;
+    border: 0px;
+    padding: 0px;
+    margin: 0px;
+    max-width: none;
+    width: 64px;
+    height: 64px;
+  }
+}

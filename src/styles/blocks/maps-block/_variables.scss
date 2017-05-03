@@ -1,0 +1,13 @@
+//Grid vars
+$columns: 12;
+
+// Wrapper width
+$base_width: 9999px;
+$desktop_width: 960px;
+$tablet_width: 720px;
+$minimal_width: 320px;
+
+//Width list
+$widths: (($minimal_width, 'xs'), ($tablet_width, 'sm'), ($desktop_width, 'md'), ($base_width, 'lg'));
+
+$inputColor: #adadad;

@@ -1,0 +1,12 @@
+---
+Name: contentblocks
+After:
+  - 'blocks/*'
+---
+
+SiteConfig:
+  extensions:
+    - MapsSiteConfig
+SiteTree:
+  extensions:
+    - MapsSiteTree

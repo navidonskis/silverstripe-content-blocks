@@ -1,0 +1,95 @@
+//Susy layout
+$susy: (
+        columns: $columns,
+        gutters: .25,
+        math: fluid,
+);
+
+@include layout($susy);
+
+.row {
+  width: 100%;
+
+  &::after {
+    content: '';
+    display: block;
+    clear: both;
+    zoom: 1;
+  }
+
+  &.row-no-space {
+
+    .col {
+      padding-left: 0;
+      padding-right: 0;
+    }
+  }
+
+  &-ib {
+    .col {
+      display: inline-block !important;
+      float: none !important;
+      margin-right: -4px;
+    }
+  }
+}
+
+.col {
+  float: left;
+  width: 100%;
+  padding: 0 1%;
+
+  @include mobile() {
+    padding: 0 15px;
+  }
+}
+
+.container {
+  max-width: $base_width;
+  width: 100%;
+  margin: 0 auto;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+@each $width in $widths {
+  @if nth($width,2) == 'xs' {
+    @for $i from 1 to $columns {
+      .col-#{nth($width,2)}-#{$i} {
+        width: (100*($i/$columns))*1%;
+      }
+    }
+  } @else {
+    @media screen and (min-width: nth($width, 1)) {
+      @for $i from 1 to $columns {
+        .col-#{nth($width,2)}-#{$i} {
+          width: (100*($i/$columns))*1%;
+        }
+      }
+    }
+  }
+  @media screen and (max-width: nth($width, 1)) {
+    .container {
+      @include container(nth($width, 1));
+    }
+  }
+}
+
+.desktop {
+  display: inherit;
+
+  @include tablet {
+    display: none !important;
+  }
+}
+
+.mobile {
+  @media screen and (min-width: $desktop_width) {
+    display: none !important;
+  }
+
+  @include tablet {
+    display: inherit;
+  }
+}

@@ -1,0 +1,26 @@
+{
+  "name": "pixelneat/silverstripe-content-blocks",
+  "description": "Accessories for SilverStripe Blocks module",
+  "license": "BSD-3-Clause",
+  "type": "silverstripe-module",
+  "keywords": [
+    "silverstripe",
+    "blocks",
+    "accessories"
+  ],
+  "homepage": "https://github.com/Pixelneat/silverstripe-content-blocks",
+  "authors": [
+    {
+      "name": "Donatas Navidonskis",
+      "email": "donatas@navidonskis.com"
+    }
+  ],
+  "require": {
+    "php": ">=5.3.3",
+    "sheadawson/silverstripe-blocks": "^1.1",
+    "bummzack/sortablefile": "^1.2"
+  },
+  "extra": {
+    "installer-name": "content-blocks"
+  }
+}

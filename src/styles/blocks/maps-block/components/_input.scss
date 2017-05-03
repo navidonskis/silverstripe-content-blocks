@@ -1,0 +1,55 @@
+.field {
+  display: block;
+  margin-bottom: 20px;
+  width: 100%;
+}
+
+input:not([type="checkbox"]), textarea {
+  border: 1px solid #DDDDDD;
+  font-size: 16px;
+
+  -webkit-transition: all 0.30s ease-in-out;
+  -moz-transition: all 0.30s ease-in-out;
+  -ms-transition: all 0.30s ease-in-out;
+  -o-transition: all 0.30s ease-in-out;
+
+  outline: none;
+  color: $inputColor;
+  padding: 13px;
+  display: block;
+
+  &::-webkit-input-placeholder,
+  &:-ms-input-placeholder {
+    color: $inputColor;
+  }
+
+  &:-moz-placeholder,
+  &::-moz-placeholder {
+    color: $inputColor;
+    opacity: 1;
+  }
+
+  width: 100%;
+  box-sizing: border-box;
+  -webkit-box-sizing:border-box;
+  -moz-box-sizing: border-box;
+
+  &:focus {
+    box-shadow: 0 0 10px rgb(96, 176, 238);
+    border: 1px solid rgb(96, 176, 238);
+  }
+}
+
+label + input:not([type="checkbox"]),
+label + textarea {
+  margin-top: 10px;
+}
+
+input[type="checkbox"] {
+  width: 20px;
+  height: 15px;
+
+  & + label {
+    display: inline-block;
+  }
+}
