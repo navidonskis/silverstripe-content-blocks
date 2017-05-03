@@ -7,9 +7,16 @@ Accessories for [Blocks](https://github.com/sheadawson/silverstripe-blocks) modu
 ## Blocks includes
 
 * [Content Image](docs/CONTENT_IMAGE_BLOCK.md) - block can store multiple images with sortable feature, but it required to have [SortableUploadField](https://github.com/bummzack/sortablefile) dependency installed. Also have a nice feature like to choose the template for your layout.
-
+    * Features
+        * Upload many images with sorting each ones
+        * Choose a template for layout
+        
 * [Google Maps](docs/GOOGLE_MAPS_BLOCK.md) - block with interactive google maps at the CMS. Can be set multiple markers, detecting zoom and position coordinates. Can be set global marker image or each marker individually.
-
+    * Features
+        * Set a global marker image or individually for each marker object
+        * Interactive set a google maps position (zoom level, coordinates)
+        * Delete or add new markers
+        
 ## Global usage
 
 * If you did not want one of those accessory blocks, simple set the blocks configuration

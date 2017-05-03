@@ -54,6 +54,19 @@ One more good feature are to set your map styles (json) and handle it to the sta
     }
 ```
 
+## Template
+
+To override a template create new file at your theme `MapBlock.ss`
+
+```html
+    <section id="map-block-{$ID}" data-cb="map-block">
+        <div data-module="google-map"
+            <% if $MarkersAsJson %> data-markers="$MarkersAsJson"<% end_if %>
+            <% if $OptionsAsJson %> data-options="$OptionsAsJson"<% end_if %>
+                style="width:100%;height:500px;"></div>
+    </section>
+```
+
 ## Screenshots
 
 ![](images/maps-block-01.png)
