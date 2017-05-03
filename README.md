@@ -1,5 +1,7 @@
 # SilverStripe Content Blocks
 
+[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/Pixelneat/silverstripe-content-blocks/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/Pixelneat/silverstripe-content-blocks/?branch=master)
+
 Accessories for [Blocks](https://github.com/sheadawson/silverstripe-blocks) module. This repository are always up-to-date with new features of blocks. 
 
 ## Blocks includes
