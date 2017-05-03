@@ -40,6 +40,15 @@ class MapBlock extends BaseBlock {
     ];
 
     /**
+     * Google Maps styles in string of JSON format. See
+     * docs/GOOGLE_MAPS_BLOCK.md how to use it.
+     *
+     * @var string|null
+     * @config
+     */
+    private static $map_styles = null;
+
+    /**
      * @return string
      */
     public function singular_name() {
@@ -53,8 +62,9 @@ class MapBlock extends BaseBlock {
         return _t('MapBlock.PLURALNAME', 'Map Blocks');
     }
 
-    private static $map_styles = null;
-
+    /**
+     * @return array
+     */
     public function getCoordinatesAsOption() {
         $coordinates = [];
 
@@ -116,6 +126,9 @@ class MapBlock extends BaseBlock {
         return parent::forTemplate();
     }
 
+    /**
+     * @return bool|string
+     */
     public function getMarkersAsJson() {
         if (count($markers = $this->Markers())) {
             $list = [];
@@ -145,6 +158,9 @@ class MapBlock extends BaseBlock {
         return false;
     }
 
+    /**
+     * @return bool|string
+     */
     public function getOptionsAsJson() {
         $data = [];
 
