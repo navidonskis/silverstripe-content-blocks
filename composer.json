@@ -18,7 +18,8 @@
   "require": {
     "php": ">=5.3.3",
     "sheadawson/silverstripe-blocks": "^1.1",
-    "bummzack/sortablefile": "^1.2"
+    "bummzack/sortablefile": "^1.2",
+    "silverstripe/display-logic": "^1.5"
   },
   "extra": {
     "installer-name": "content-blocks"

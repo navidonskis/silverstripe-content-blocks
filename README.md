@@ -17,6 +17,8 @@ Accessories for [Blocks](https://github.com/sheadawson/silverstripe-blocks) modu
         * Interactive set a google maps position (zoom level, coordinates)
         * Delete or add new markers
         
+* [Slider](docs/SLIDER.md) - block of slider which hold different types (video, image slider types).
+        
 ## Global usage
 
 * If you did not want one of those accessory blocks, simple set the blocks configuration

@@ -118,6 +118,8 @@ class ContentImageBlock extends BaseBlock {
                                ->setFolderName($this->getUploadDirectory()),
         ]);
 
+        $this->extend('updateCMSFields', $fields);
+
         return $fields;
     }
 

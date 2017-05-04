@@ -74,6 +74,8 @@ class Marker extends \DataObject {
         $content
             ->setRows(15);
 
+        $this->extend('updateCMSFields', $fields);
+
         return $fields;
     }
 

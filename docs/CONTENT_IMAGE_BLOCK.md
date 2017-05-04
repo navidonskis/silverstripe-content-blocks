@@ -4,19 +4,19 @@
 
 Content types are:
     
-    * BottomImageTopContent
-    * TopImageBottomContent
-    * LeftImageRightContentWrap
-    * LeftBiggerImageRightContentWrap
-    * RightImageLeftContentWrap
-    * RightBiggerImageLeftContentWrap
-    * LeftImageRightContent
-    * LeftBiggerImageRightContent
-    * RightImageLeftContent
-    * RightBiggerImageLeftContent
-    * BottomImageListTopContent
-    * TopImageListBottomContent
-    * FullWidthImageLeftContent"
+* BottomImageTopContent
+* TopImageBottomContent
+* LeftImageRightContentWrap
+* LeftBiggerImageRightContentWrap
+* RightImageLeftContentWrap
+* RightBiggerImageLeftContentWrap
+* LeftImageRightContent
+* LeftBiggerImageRightContent
+* RightImageLeftContent
+* RightBiggerImageLeftContent
+* BottomImageListTopContent
+* TopImageListBottomContent
+* FullWidthImageLeftContent"
     
 Each content types can be styled and restructuring by defining your template at theme. Check [template](#template) section.
 

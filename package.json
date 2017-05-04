@@ -1,5 +1,5 @@
 {
-  "name": "pixelneat/silverstripe-content-blocks",
+  "name": "silverstripe-content-blocks",
   "version": "1.0.0",
   "description": "Accessories for SilverStripe Blocks module",
   "scripts": {

@@ -114,6 +114,8 @@ class MapBlock extends BaseBlock {
 
         $fields->removeByName(['Content']);
 
+        $this->extend('updateCMSFields', $fields);
+
         return $fields;
     }
 
