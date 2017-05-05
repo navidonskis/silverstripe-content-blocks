@@ -1,0 +1,104 @@
+.slider-block {
+	&__frame {
+		width: 100%;
+		margin: 0 auto;
+		//font-size: 0;
+		//line-height: 0;
+		overflow: hidden;
+		white-space: nowrap;
+		position: relative;
+	}
+
+	&__slides {
+		display: block;
+	}
+
+	&__has-background {
+		background-repeat: no-repeat;
+		background-position: center center;
+		background-size: cover;
+	}
+
+	*[data-item] {
+		position: relative;
+		display: inline-block;
+		width: 100%;
+		height: 50vh;
+
+		@media screen and (min-width: 550px) {
+			min-height: 500px;
+		}
+	}
+
+	&__navigation-button {
+		position: absolute;
+		top: 30%;
+		display: block;
+		cursor: pointer;
+		opacity: 0;
+		transition: opacity .5s;
+
+		&.prev {
+			left: 0;
+		}
+
+		&.right {
+			right: 0;
+		}
+	}
+
+	&__content {
+		display: flex;
+		height: 100%;
+		padding: 15px 30px;
+		position: absolute;
+		width: calc(100% - 60px);
+
+		&.left {
+			justify-content: flex-start;
+		}
+
+		&.center {
+			justify-content: center;
+		}
+
+		&.right {
+			justify-content: flex-end;
+		}
+
+		&.top {
+			align-items: flex-start;
+		}
+
+		&.middle {
+			align-items: center;
+		}
+
+		&.bottom {
+			align-items: flex-end;
+		}
+
+		&.light {
+			color: #FFFFFF;
+		}
+
+		&.dark {
+			color: #000000;
+		}
+
+		&--inner {
+			max-width: 50%;
+			white-space: normal;
+
+			@media screen and (max-width: 550px) {
+				max-width: 100%;
+			}
+		}
+	}
+
+	&:hover {
+		.slider-block__navigation-button {
+			opacity: 1;
+		}
+	}
+}
