@@ -75,6 +75,15 @@ class VideoSliderItem extends BaseSliderItem {
     ];
 
     /**
+     * @var array
+     * @config
+     */
+    private static $thumbnail_links = [
+        "youtube" => "https://img.youtube.com/vi/{VideoId}/maxresdefault.jpg",
+        "vimeo"   => "http://vimeo.com/api/v2/video/{VideoId}.php",
+    ];
+
+    /**
      * @return string
      */
     public function singular_name() {
@@ -318,20 +327,11 @@ class VideoSliderItem extends BaseSliderItem {
         $title = ! empty($this->Title) ? FileNameFilter::create()->filter($this->Title)."-{$this->ID}" : "video-{$this->ID}";
         $fileName = strtolower(sprintf("%s.jpg", $title));
         $baseFolder = Director::baseFolder()."/".$folder->getFilename();
+        $type = strtolower($this->Type);
+        $fileContent = file_get_contents(str_replace('{VideoId}', $videoId, static::config()->thumbnail_links[$type]));
 
-        switch (strtolower($this->Type)) {
-            case 'youtube':
-
-                $fileContent = file_get_contents("https://img.youtube.com/vi/{$videoId}/maxresdefault.jpg");
-
-                break;
-
-            case 'vimeo':
-
-                $hash = unserialize(file_get_contents("http://vimeo.com/api/v2/video/{$videoId}.php"));
-                $fileContent = file_get_contents($hash[0]['thumbnail_large']);
-
-                break;
+        if ($type == 'vimeo') {
+            $fileContent = file_get_contents($fileContent[0]['thumbnail_large']);
         }
 
         if ($fileContent) {
