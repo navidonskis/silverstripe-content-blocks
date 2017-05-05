@@ -5,6 +5,7 @@
  * @since     2017
  * @class     VideoSliderItem
  *
+ * @property int     CoverID
  * @property int     Mp4ID
  * @property int     WebMID
  * @property int     OggID
@@ -15,6 +16,7 @@
  * @method File Mp4
  * @method File WebM
  * @method File Ogg
+ * @method Image Cover
  *
  * @TODO      implement https://github.com/xemle/html5-video-php package to convert webm and ogg videos when saving.
  */
@@ -35,9 +37,20 @@ class VideoSliderItem extends BaseSliderItem {
      * @config
      */
     private static $has_one = [
-        'Mp4'  => 'File',
-        'WebM' => 'File',
-        'Ogg'  => 'File',
+        'Mp4'   => 'File',
+        'WebM'  => 'File',
+        'Ogg'   => 'File',
+        'Cover' => 'Image',
+    ];
+
+    /**
+     * Allow to call those functions.
+     *
+     * @var array
+     * @config
+     */
+    private static $better_buttons_actions = [
+        'fetchVideosPicture',
     ];
 
     /**
@@ -93,10 +106,11 @@ class VideoSliderItem extends BaseSliderItem {
      */
     public function getCMSFields() {
         $fields = parent::getCMSFields();
-        $fields->removeByName(['Type', 'Mp4', 'WebM', 'Ogg', 'URL', 'AutoPlay']);
+        $fields->removeByName(['Type', 'Mp4', 'WebM', 'Ogg', 'URL', 'AutoPlay', 'Cover']);
         $fields->findOrMakeTab('Root.Media', $this->fieldLabel('Media'));
 
         $fields->addFieldsToTab('Root.Media', [
+            $coverField = UploadField::create('Cover', $this->fieldLabel('Cover')),
             DropdownField::create('AutoPlay', $this->fieldLabel('TurnOnAutoPlayMode'), BlocksUtility::localized_answers()),
             $videoType = OptionsetField::create('Type', $this->fieldLabel('Type'), $this->getSliderTypes(), 'File'),
             $uploadFieldContainer = DisplayLogicWrapper::create(
@@ -108,6 +122,16 @@ class VideoSliderItem extends BaseSliderItem {
                 $this->fieldLabel('SetVideoURLAddress')
             ),
         ]);
+
+        $coverField
+            ->setAllowedMaxFileNumber(1)
+            ->setAllowedFileCategories('image')
+            ->setRightTitle(
+                _t('VideoSliderItem.SET_VIDEO_COVER_IMAGE', 'Set video cover image')
+            )
+            ->setFolderName(
+                sprintf('%s/Sliders', BaseBlock::config()->upload_directory)
+            );
 
         $mp4UploadField
             ->setAllowedMaxFileNumber(1)
@@ -178,7 +202,7 @@ class VideoSliderItem extends BaseSliderItem {
      * if can't parsed, object type not one of supported
      * providers or just empty url address field.
      *
-     * @return bool|string
+     * @return string|false
      * @throws ProviderNotFound
      */
     public function getVideoId() {
@@ -243,6 +267,89 @@ class VideoSliderItem extends BaseSliderItem {
         }
 
         return $validation;
+    }
+
+    /**
+     * @return Image|false
+     */
+    public function getSliderImage() {
+        if ($this->Cover()->exists()) {
+            return $this->Cover();
+        }
+
+        return false;
+    }
+
+    /**
+     * Creating a button to fetch videos picture if cover image not exists.
+     *
+     * @return FieldList
+     */
+    public function getBetterButtonsActions() {
+        $fields = parent::getBetterButtonsActions();
+
+        if ($this->Type != 'File' && ! $this->Cover()->exists() && ! empty($this->URL)) {
+            $fields->push(BetterButtonCustomAction::create('fetchVideosPicture', _t('VideoSliderItem.FETCH_VIDEOS_PICTURE', 'Fetch videos picture')));
+        }
+
+        return $fields;
+    }
+
+    /**
+     * Fetching/downloading picture from the providers url address and
+     * saving as Image object.
+     *
+     * @return false
+     */
+    public function fetchVideosPicture() {
+        try {
+            $videoId = $this->getVideoId();
+        } catch (ProviderNotFound $ex) {
+            return false;
+        }
+
+        $directoryPath = sprintf("%s/Sliders", BaseBlock::config()->upload_directory);
+        $folder = Folder::find_or_make($directoryPath);
+
+        if (empty($this->URL)) {
+            return false;
+        }
+
+        $title = ! empty($this->Title) ? FileNameFilter::create()->filter($this->Title)."-{$this->ID}" : "video-{$this->ID}";
+        $fileName = strtolower(sprintf("%s.jpg", $title));
+        $baseFolder = Director::baseFolder()."/".$folder->getFilename();
+
+        switch (strtolower($this->Type)) {
+            case 'youtube':
+
+                $fileContent = file_get_contents("https://img.youtube.com/vi/{$videoId}/maxresdefault.jpg");
+
+                break;
+
+            case 'vimeo':
+
+                $hash = unserialize(file_get_contents("http://vimeo.com/api/v2/video/{$videoId}.php"));
+                $fileContent = file_get_contents($hash[0]['thumbnail_large']);
+
+                break;
+        }
+
+        if ($fileContent) {
+            if (file_put_contents($absoluteFileName = ($baseFolder.$fileName), $fileContent)) {
+                $image = Image::create([
+                    "Filename" => $folder->getFilename().$fileName,
+                    "Title"    => $this->Title,
+                    "Name"     => $fileName,
+                    "ParentID" => $folder->ID,
+                    "OwnerID"  => Member::currentUserID(),
+                ]);
+
+                if ($image->write()) {
+                    $this->CoverID = $image->ID;
+                    $this->write();
+                }
+            }
+        }
     }
 
 }

@@ -54,4 +54,15 @@ class ImageSliderItem extends BaseSliderItem {
 
         return $fields;
     }
+
+    /**
+     * @return Image|false
+     */
+    public function getSliderImage() {
+        if ($this->Picture()->exists()) {
+            return $this->Picture();
+        }
+
+        return false;
+    }
 }

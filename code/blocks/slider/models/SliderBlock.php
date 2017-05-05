@@ -18,6 +18,14 @@ class SliderBlock extends BaseBlock {
     ];
 
     /**
+     * When slider is rendering, load javascript module for the slider.
+     *
+     * @var bool
+     * @config
+     */
+    private static $load_slider_script = true;
+
+    /**
      * @return string
      */
     public function singular_name() {
@@ -100,4 +108,17 @@ class SliderBlock extends BaseBlock {
 
         return $classes;
     }
+}
+
+class SliderBlock_Controller extends Block_Controller {
+
+    public function init() {
+        if (SliderBlock::config()->load_slider_script) {
+            Requirements::javascript("//cdnjs.cloudflare.com/ajax/libs/lory.js/2.2.0/lory.min.js");
+            Requirements::javascript(CONTENT_BLOCKS_DIR."/assets/javascript/universal-slider.js");
+        }
+
+        parent::init();
+    }
+
 }
