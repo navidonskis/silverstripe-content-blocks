@@ -5,9 +5,23 @@
  * @since     2017
  * @class     SliderBlock
  *
+ * @property int     SlideSpeed
+ * @property boolean EnableMouseEvents
+ * @property boolean Infinite
+ *
  * @method DataList Sliders
  */
 class SliderBlock extends BaseBlock {
+
+    /**
+     * @var array
+     * @config
+     */
+    private static $db = [
+        'SlideSpeed'        => 'Int(600)',
+        'EnableMouseEvents' => 'Boolean(true)',
+        'Infinite'          => 'Boolean(true)',
+    ];
 
     /**
      * @var array
@@ -24,6 +38,16 @@ class SliderBlock extends BaseBlock {
      * @config
      */
     private static $load_slider_script = true;
+
+    /**
+     * @var array
+     * @config
+     */
+    private static $defaults = [
+        'SlideSpeed'        => 600,
+        'EnableMouseEvents' => true,
+        'Infinite'          => true,
+    ];
 
     /**
      * @return string
@@ -44,7 +68,7 @@ class SliderBlock extends BaseBlock {
      */
     public function getCMSFields() {
         $fields = parent::getCMSFields();
-        $fields->removeByName(['Content']);
+        $fields->removeByName(['Content', 'SlideSpeed', 'EnableMouseEvents', 'Infinite']);
         $fields->findOrMakeTab('Root.Sliders', _t('SliderItem.PLURALNAME', 'Sliders'));
 
         if ($this->ID) {
@@ -53,6 +77,12 @@ class SliderBlock extends BaseBlock {
             $label = _t('SliderBlock.PLEASE_SAVE_BEFORE_ADD_SLIDERS', 'Please save block before add sliders');
             $sliderField = LiteralField::create("PleaseSaveBeforeAddSliders", "<p class=\"message notice\">{$label}</p>");
         }
+
+        $fields->addFieldsToTab('Root.Main', [
+            TextField::create('SlideSpeed', _t('SliderBlock.SLIDE_SPEED', 'Slide speed (ms)')),
+            DropdownField::create('EnableMouseEvents', _t('SliderBlock.ENABLE_MOUSE_EVENTS', 'Enable mouse events?'), BlocksUtility::localized_answers()),
+            DropdownField::create('Infinite', _t('SliderBlock.INFINITE', 'Infinite?'), BlocksUtility::localized_answers()),
+        ]);
 
         $fields->addFieldToTab('Root.Sliders', $sliderField);
 
@@ -107,6 +137,17 @@ class SliderBlock extends BaseBlock {
         }
 
         return $classes;
+    }
+
+    /**
+     * @return array|string
+     */
+    public function getSliderOptions() {
+        return \Convert::raw2att(\Convert::array2json([
+            'slideSpeed'        => ! empty($this->SlideSpeed) ? (int) $this->SlideSpeed : 300,
+            'enableMouseEvents' => (bool) $this->EnableMouseEvents,
+            'infinite'          => (int) $this->Infinite,
+        ]));
     }
 }
 

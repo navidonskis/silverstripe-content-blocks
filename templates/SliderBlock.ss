@@ -1,4 +1,4 @@
-<section id="slider-block-{$ID}" data-cb="$BlockName" class="slider-block" data-module="slider">
+<section id="slider-block-{$ID}" data-cb="$BlockName" class="slider-block" data-module="slider" data-options="$SliderOptions">
     <div class="slider-block__frame">
         <div class="slider-block__slides">
             <% loop $Sliders %>

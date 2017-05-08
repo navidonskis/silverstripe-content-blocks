@@ -57,7 +57,7 @@ class VideoSliderItem extends BaseSliderItem {
      * Set providers default embed link. The key value should
      * be equal within Type field value.
      * {VideoId} - will be replaced with actual video id
-     * {AutoPlay} - will be replaced within key of AutoPlay if AutoPlay field is true.
+     * {AutoPlay} - will be replaced within key of AutoPlay.
      *
      * @var array
      * @config
@@ -82,6 +82,13 @@ class VideoSliderItem extends BaseSliderItem {
         "youtube" => "https://img.youtube.com/vi/{VideoId}/maxresdefault.jpg",
         "vimeo"   => "http://vimeo.com/api/v2/video/{VideoId}.php",
     ];
+
+    /**
+     * @return string
+     */
+    public function getVideoType() {
+        return strtolower($this->Type);
+    }
 
     /**
      * @return string
