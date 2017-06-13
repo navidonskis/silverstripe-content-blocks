@@ -22,7 +22,7 @@ class BaseSliderItem extends \DataObject {
      * @config
      */
     private static $db = [
-        'Title'     => 'Varchar',
+        'Title'     => 'Varchar(320)',
         'Content'   => 'HTMLText',
         'AlignX'    => 'Enum(array("Left", "Center", "Right"), "Left")',
         'AlignY'    => 'Enum(array("Top", "Middle", "Bottom"), "Middle")',
@@ -212,8 +212,10 @@ class BaseSliderItem extends \DataObject {
     }
 
     public function getHeading() {
-        $this->extend('updateBeforeHeading', $this->Title);
+        $title = $this->Title;
 
-        return $this->Title;
+        $this->extend('updateBeforeHeading', $title);
+
+        return $title;
     }
 }

@@ -87,6 +87,8 @@ class ContentImageBlock extends BaseBlock {
             $types[$type] = sprintf('%s/%s.png', $fileSource, str_replace(' ', '-', strtolower(\FormField::name_to_label($type))));
         }
 
+        $this->extend('updateTemplateTypes', $types);
+
         return $currentType !== null && array_key_exists($currentType, $types) ? $types[$currentType] : $types;
     }
 
@@ -164,6 +166,8 @@ class ContentImageBlock extends BaseBlock {
                 $options[$type] = \DBField::create_field("HTMLText", $content);
             }
         }
+
+        $this->extend('updateTemplateOptions', $options);
 
         return $options;
     }
