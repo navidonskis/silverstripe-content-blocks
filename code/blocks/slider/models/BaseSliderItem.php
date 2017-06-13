@@ -199,9 +199,9 @@ class BaseSliderItem extends \DataObject {
      * @return \HTMLText
      */
     public function forTemplate() {
-        return $this->renderWith(
-            sprintf("%s_%s", $this->Block()->ClassName, $this->ClassName)
-        );
+        $template = sprintf("%s_%s", $this->Block()->ClassName, $this->ClassName);
+
+        return $this->renderWith($template);
     }
 
     /**
@@ -209,5 +209,11 @@ class BaseSliderItem extends \DataObject {
      */
     public function getSliderImage() {
         return false;
+    }
+
+    public function getHeading() {
+        $this->extend('updateBeforeHeading', $this->Title);
+
+        return $this->Title;
     }
 }

@@ -8,7 +8,7 @@
     </div>
     <div class="slider-block__content $HorizontalType $VerticalType $LowerStyle">
         <div class="slider-block__content--inner">
-            <h2>$Title</h2>
+            <% if $Heading %><h2>$Heading</h2><% end_if %>
 
             $Content
         </div>
