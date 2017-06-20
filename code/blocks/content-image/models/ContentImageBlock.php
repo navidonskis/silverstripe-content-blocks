@@ -116,9 +116,15 @@ class ContentImageBlock extends BaseBlock {
 
         $fields->addFieldsToTab('Root.Images', [
             \SortableUploadField::create('Images', $this->fieldLabel('Images'))
-                               ->setAllowedFileCategories('image')
-                               ->setFolderName($this->getUploadDirectory()),
+                                ->setAllowedFileCategories('image')
+                                ->setFolderName($this->getUploadDirectory()),
         ]);
+
+        $fields->addFieldToTab(
+            'Root.Main',
+            $fields->dataFieldByName('ExtraClass'),
+            'Content'
+        );
 
         $this->extend('updateCMSFields', $fields);
 
