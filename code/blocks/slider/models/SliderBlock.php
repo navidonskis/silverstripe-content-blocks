@@ -155,8 +155,8 @@ class SliderBlock_Controller extends Block_Controller {
 
     public function init() {
         if (SliderBlock::config()->load_slider_script) {
-            Requirements::javascript("//cdnjs.cloudflare.com/ajax/libs/lory.js/2.2.0/lory.min.js");
-            Requirements::javascript(CONTENT_BLOCKS_DIR."/assets/javascript/universal-slider.js");
+//            Requirements::javascript("//cdnjs.cloudflare.com/ajax/libs/lory.js/2.2.0/lory.min.js");
+//            Requirements::javascript(CONTENT_BLOCKS_DIR."/assets/javascript/universal-slider.js");
         }
 
         parent::init();
