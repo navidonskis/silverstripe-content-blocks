@@ -49,6 +49,15 @@ class MapBlock extends BaseBlock {
     private static $map_styles = null;
 
     /**
+     * This will load javascript dependency to initialize
+     * user client map element.
+     *
+     * @var bool
+     * @config
+     */
+    private static $load_javascript = true;
+
+    /**
      * @return string
      */
     public function singular_name() {
@@ -123,7 +132,9 @@ class MapBlock extends BaseBlock {
      * @return \HTMLText
      */
     public function forTemplate() {
-        \Requirements::javascript(CONTENT_BLOCKS_DIR.'/assets/javascript/maps-frontend.js');
+        if (static::config()->load_javascript) {
+            \Requirements::javascript(CONTENT_BLOCKS_DIR.'/assets/javascript/maps-frontend.js');
+        }
 
         return parent::forTemplate();
     }
