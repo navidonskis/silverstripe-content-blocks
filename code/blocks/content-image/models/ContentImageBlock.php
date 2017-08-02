@@ -107,6 +107,7 @@ class ContentImageBlock extends BaseBlock {
     public function getCMSFields() {
         $fields = parent::getCMSFields();
         $fields->removeByName(['Template', 'Images']);
+
         $fields->findOrMakeTab('Root.Template', $this->fieldLabel('Template'));
         $fields->findOrMakeTab('Root.Images', $this->fieldLabel('Images'));
 
@@ -119,12 +120,6 @@ class ContentImageBlock extends BaseBlock {
                                 ->setAllowedFileCategories('image')
                                 ->setFolderName($this->getUploadDirectory()),
         ]);
-
-        $fields->addFieldToTab(
-            'Root.Main',
-            $fields->dataFieldByName('ExtraClass'),
-            'Content'
-        );
 
         $this->extend('updateCMSFields', $fields);
 
