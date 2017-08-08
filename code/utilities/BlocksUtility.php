@@ -62,13 +62,4 @@ class BlocksUtility extends Object {
             1 => _t('BlocksUtility.YES', 'Yes'),
         ];
     }
-
-    /**
-     * Check the path of the ffmpeg.
-     *
-     * @return string
-     */
-    public static function whichFFMPEG() {
-        return trim(shell_exec('type -P ffmpeg'));
-    }
 }

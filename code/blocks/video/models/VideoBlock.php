@@ -48,8 +48,7 @@ class VideoBlock extends BaseBlock {
      * @config
      */
     private static $better_buttons_actions = [
-        'fetchVideosPicture',
-        'renderVideo'
+        'fetchVideosPicture'
     ];
 
     /**
@@ -267,12 +266,6 @@ class VideoBlock extends BaseBlock {
             $fields->push(BetterButtonCustomAction::create('fetchVideosPicture', _t('VideoSliderItem.FETCH_VIDEOS_PICTURE', 'Fetch videos picture')));
         }
 
-        if ($this->Type == 'File' && $this->Mp4()->exists() && ! empty(BlocksUtility::whichFFMPEG())) {
-            if (! $this->WebM()->exists() || ! $this->Ogg()->exists()) {
-                $fields->push(BetterButtonCustomAction::create('renderVideo', _t('VideoBlock.RENDER_HTML5_VIDEO', 'Render HTML5 Video (WebM & Ogg)')));
-            }
-        }
-
         return $fields;
     }
 
@@ -371,28 +364,6 @@ class VideoBlock extends BaseBlock {
                 }
             }
         }
-    }
-
-    public function renderVideo() {
-        $config = array(
-            'ffmpeg.bin' => BlocksUtility::whichFFMPEG(),
-            'qt-faststart.bin' => '/usr/local/bin/qt-faststart',
-        );
-        $html5 = new \Html5Video\Html5Video($config);
-
-        $source = Controller::join_links(
-            Director::baseFolder(),
-            $this->Mp4()->getFilename()
-        );
-
-        $destination = Controller::join_links(
-            Director::baseFolder(),
-            '/assets/test.webm'
-        );
-
-        // target format is the file extension of $targetVideo. One of mp4, webm, or ogg
-        $profileName = '720p-hd'; // other profiles are listed in src/Html5Video/profiles
-        $html5->convert($source, $destination, $profileName);
     }
 
     public function getVideoOptions() {
