@@ -93,7 +93,7 @@ gulp.task('javascript', jsTasks);
 
 gulp.task('default', ['javascript', 'styles']);
 
-gulp.task('watch', ['default', 'javascript', 'styles'], () => {
-    gulp.watch(`${CONFIG.DIR.SRC}/${CONFIG.DIR.JS}/**/*.js`, ['javascript']);
+gulp.task('watch', ['default', 'javascript', 'styles', ...jsTasks], () => {
+    gulp.watch(`${CONFIG.DIR.SRC}/${CONFIG.DIR.JS}/**/*.js`, ['javascript', ...jsTasks]);
     gulp.watch(`${CONFIG.DIR.SRC}/${CONFIG.DIR.CSS}/**/*.{sass,scss}`, ['styles']);
 });

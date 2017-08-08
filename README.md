@@ -18,6 +18,8 @@ Accessories for [Blocks](https://github.com/sheadawson/silverstripe-blocks) modu
         * Delete or add new markers
         
 * [Slider](docs/SLIDER.md) - block of slider which hold different types (video, image slider types).
+
+* [Video](docs/VIDEO.md) - block of video. In this video block can be added Vimeo, Youtube URL links, or upload your own video to the server.
         
 ## Global usage
 

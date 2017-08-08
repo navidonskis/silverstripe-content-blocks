@@ -3,7 +3,7 @@
 /**
  * @author    Donatas Navidonskis <donatas@navidonskis.com>
  * @since     2017
- * @class     VideoSliderItem
+ * @class     VideoBlock
  *
  * @property int     CoverID
  * @property int     Mp4ID
@@ -17,10 +17,8 @@
  * @method File WebM
  * @method File Ogg
  * @method Image Cover
- *
- * @TODO      implement https://github.com/xemle/html5-video-php package to convert webm and ogg videos when saving.
  */
-class VideoSliderItem extends BaseSliderItem {
+class VideoBlock extends BaseBlock {
 
     /**
      * @var array
@@ -28,7 +26,7 @@ class VideoSliderItem extends BaseSliderItem {
      */
     private static $db = [
         'Type'     => 'Enum(array("Youtube", "Vimeo", "File"), "File")',
-        'URL'      => 'Varchar(128)',
+        'URL'      => 'Varchar(1024)',
         'AutoPlay' => 'Boolean(true)',
     ];
 
@@ -51,37 +49,35 @@ class VideoSliderItem extends BaseSliderItem {
      */
     private static $better_buttons_actions = [
         'fetchVideosPicture',
+        'renderVideo'
     ];
 
     /**
-     * Set providers default embed link. The key value should
-     * be equal within Type field value.
-     * {VideoId} - will be replaced with actual video id
-     * {AutoPlay} - will be replaced within key of AutoPlay.
+     * Load javascript plugin to load all block features. Set to false
+     * and add yours. This will load /assets/javascript/video-block.js file.
      *
-     * @var array
+     * @var bool
      * @config
      */
-    private static $embed_links = [
-        "Youtube" => [
-            "Link"     => "https://www.youtube.com/embed/{VideoId}{AutoPlay}",
-            "AutoPlay" => "?autoplay=1",
-        ],
-        "Vimeo"   => [
-            "Link"     => "https://player.vimeo.com/video/{VideoId}{AutoPlay}",
-            "AutoPlay" => "?autoplay=1",
-        ],
-        // Set your own providers options
-    ];
+    private static $load_javascript_plugin = true;
 
     /**
-     * @var array
-     * @config
+     * If the singular name is set in a private static $singular_name, it cannot be changed using the translation files
+     * for some reason. Fix it by defining a method that handles the translation.
+     * @return string
      */
-    private static $thumbnail_links = [
-        "youtube" => "https://img.youtube.com/vi/{VideoId}/maxresdefault.jpg",
-        "vimeo"   => "http://vimeo.com/api/v2/video/{VideoId}.php",
-    ];
+    public function singular_name() {
+        return _t('VideoBlock.SINGULARNAME', 'Video Block');
+    }
+
+    /**
+     * If the plural name is set in a private static $plural_name, it cannot be changed using the translation files
+     * for some reason. Fix it by defining a method that handles the translation.
+     * @return string
+     */
+    public function plural_name() {
+        return _t('VideoBlock.PLURALNAME', 'Video Blocks');
+    }
 
     /**
      * @return string
@@ -91,23 +87,9 @@ class VideoSliderItem extends BaseSliderItem {
     }
 
     /**
-     * @return string
-     */
-    public function singular_name() {
-        return _t('VideoSliderItem.SINGULARNAME', 'Video slider');
-    }
-
-    /**
-     * @return string
-     */
-    public function plural_name() {
-        return _t('VideoSliderItem.PLURALNAME', 'Video sliders');
-    }
-
-    /**
      * @return array
      */
-    public function getSliderTypes() {
+    public function getVideoTypes() {
         $types = [];
 
         foreach ($this->dbObject('Type')->enumValues() as $type) {
@@ -118,17 +100,17 @@ class VideoSliderItem extends BaseSliderItem {
     }
 
     /**
-     * @return \FieldList
+     * @return FieldList
      */
     public function getCMSFields() {
         $fields = parent::getCMSFields();
-        $fields->removeByName(['Type', 'Mp4', 'WebM', 'Ogg', 'URL', 'AutoPlay', 'Cover']);
+        $fields->removeByName(['Type', 'Mp4', 'WebM', 'Ogg', 'URL', 'AutoPlay', 'Cover', 'Content']);
         $fields->findOrMakeTab('Root.Media', $this->fieldLabel('Media'));
 
         $fields->addFieldsToTab('Root.Media', [
             $coverField = UploadField::create('Cover', $this->fieldLabel('Cover')),
             DropdownField::create('AutoPlay', $this->fieldLabel('TurnOnAutoPlayMode'), BlocksUtility::localized_answers()),
-            $videoType = OptionsetField::create('Type', $this->fieldLabel('Type'), $this->getSliderTypes(), 'File'),
+            $videoType = OptionsetField::create('Type', $this->fieldLabel('Type'), $this->getVideoTypes(), 'File'),
             $uploadFieldContainer = DisplayLogicWrapper::create(
                 $mp4UploadField = UploadField::create('Mp4', $this->fieldLabel('VideoMp4')),
                 $webMUploadField = UploadField::create('WebM', $this->fieldLabel('VideoWebM')),
@@ -144,10 +126,7 @@ class VideoSliderItem extends BaseSliderItem {
             ->setAllowedFileCategories('image')
             ->setRightTitle(
                 _t('VideoSliderItem.SET_VIDEO_COVER_IMAGE', 'Set video cover image')
-            )
-            ->setFolderName(
-                sprintf('%s/Sliders', BaseBlock::config()->upload_directory)
-            );
+            )->setFolderName(sprintf('%s/covers', BaseBlock::config()->upload_directory));
 
         $mp4UploadField
             ->setAllowedMaxFileNumber(1)
@@ -156,10 +135,7 @@ class VideoSliderItem extends BaseSliderItem {
                 _t('VideoSliderItem.ALLOWED_FILE_EXTENSIONS', 'Allowed file extensions: {extensions}', [
                     'extensions' => '.mp4',
                 ])
-            )
-            ->setFolderName(
-                sprintf('%s/Video-Sliders', BaseBlock::config()->upload_directory)
-            );
+            )->setFolderName(sprintf('%s/videos', BaseBlock::config()->upload_directory));
 
         $webMUploadField
             ->setAllowedMaxFileNumber(1)
@@ -168,10 +144,7 @@ class VideoSliderItem extends BaseSliderItem {
                 _t('VideoSliderItem.ALLOWED_FILE_EXTENSIONS', 'Allowed file extensions: {extensions}', [
                     'extensions' => '.webm',
                 ])
-            )
-            ->setFolderName(
-                sprintf('%s/Video-Sliders', BaseBlock::config()->upload_directory)
-            );
+            )->setFolderName(sprintf('%s/videos', BaseBlock::config()->upload_directory));
 
         $oggUploadField
             ->setAllowedMaxFileNumber(1)
@@ -180,10 +153,7 @@ class VideoSliderItem extends BaseSliderItem {
                 _t('VideoSliderItem.ALLOWED_FILE_EXTENSIONS', 'Allowed file extensions: {extensions}', [
                     'extensions' => '.ogg',
                 ])
-            )
-            ->setFolderName(
-                sprintf('%s/Video-Sliders', BaseBlock::config()->upload_directory)
-            );
+            )->setFolderName(sprintf('%s/videos', BaseBlock::config()->upload_directory));
 
         $uploadFieldContainer->displayIf('Type')->isEqualTo('File');
         $urlAddressField->displayIf('Type')->isNotEqualTo('File');
@@ -199,25 +169,7 @@ class VideoSliderItem extends BaseSliderItem {
      * @return array
      */
     public function fieldLabels($includeRelations = true) {
-        return array_merge(parent::fieldLabels($includeRelations), static::labels());
-    }
-
-    /**
-     * @return array
-     */
-    public static function labels() {
-        return [
-            'Type'               => _t('VideoSliderItem.TYPE', 'Type'),
-            'Youtube'            => _t('VideoSliderItem.YOUTUBE', 'Youtube'),
-            'Vimeo'              => _t('VideoSliderItem.VIMEO', 'Vimeo'),
-            'File'               => _t('VideoSliderItem.FILE', 'File'),
-            'URLAddress'         => _t('VideoSliderItem.URL_ADDRESS', 'URL address'),
-            'SetVideoURLAddress' => _t('VideoSliderItem.SET_VIDEO_URL_ADDRESS', 'Set video URL address'),
-            'VideoMp4'           => _t('SliderItem.VIDEO_MP4', 'Video Mp4'),
-            'VideoWebM'          => _t('SliderItem.VIDEO_WEBM', 'Video WebM'),
-            'VideoOgg'           => _t('SliderItem.VIDEO_OGG', 'Video Ogg'),
-            'TurnOnAutoPlayMode' => _t('SliderItem.TURN_ON_AUTO_PLAY_MODE', 'Turn on auto play mode?'),
-        ];
+        return array_merge(parent::fieldLabels($includeRelations), VideoSliderItem::labels());
     }
 
     /**
@@ -240,7 +192,7 @@ class VideoSliderItem extends BaseSliderItem {
 
     /**
      * Get embed link by the set of Type field. Method depends by
-     * static::$embed_links property.
+     * VideoSliderItem::$embed_links property.
      *
      * @return bool|string
      */
@@ -252,7 +204,7 @@ class VideoSliderItem extends BaseSliderItem {
                 return false;
             }
 
-            if ($videoId && array_key_exists($this->Type, ($options = static::config()->embed_links))) {
+            if ($videoId && array_key_exists($this->Type, ($options = VideoSliderItem::config()->embed_links))) {
                 $options = $options[$this->Type];
                 $autoPlay = array_key_exists("AutoPlay", $options) && ! empty($options["AutoPlay"]) ? $options["AutoPlay"] : '';
 
@@ -295,7 +247,7 @@ class VideoSliderItem extends BaseSliderItem {
     /**
      * @return Image|false
      */
-    public function getSliderImage() {
+    public function getCoverImage() {
         if ($this->Cover()->exists()) {
             return $this->Cover();
         }
@@ -315,7 +267,52 @@ class VideoSliderItem extends BaseSliderItem {
             $fields->push(BetterButtonCustomAction::create('fetchVideosPicture', _t('VideoSliderItem.FETCH_VIDEOS_PICTURE', 'Fetch videos picture')));
         }
 
+        if ($this->Type == 'File' && $this->Mp4()->exists() && ! empty(BlocksUtility::whichFFMPEG())) {
+            if (! $this->WebM()->exists() || ! $this->Ogg()->exists()) {
+                $fields->push(BetterButtonCustomAction::create('renderVideo', _t('VideoBlock.RENDER_HTML5_VIDEO', 'Render HTML5 Video (WebM & Ogg)')));
+            }
+        }
+
         return $fields;
+    }
+
+    /**
+     * @return bool|string
+     */
+    public function getMp4VideoUrl() {
+        $file = $this->Mp4();
+
+        if (! ($file instanceof File) || ! $file->exists()) {
+            return false;
+        }
+
+        return $file->getAbsoluteURL();
+    }
+
+    /**
+     * @return bool|string
+     */
+    public function getWebMVideoUrl() {
+        $file = $this->WebM();
+
+        if (! ($file instanceof File) || ! $file->exists()) {
+            return false;
+        }
+
+        return $file->getAbsoluteURL();
+    }
+
+    /**
+     * @return bool|string
+     */
+    public function getOggVideoUrl() {
+        $file = $this->Ogg();
+
+        if (! ($file instanceof File) || ! $file->exists()) {
+            return false;
+        }
+
+        return $file->getAbsoluteURL();
     }
 
     /**
@@ -342,10 +339,20 @@ class VideoSliderItem extends BaseSliderItem {
         $fileName = strtolower(sprintf("%s.jpg", $title));
         $baseFolder = Director::baseFolder()."/".$folder->getFilename();
         $type = strtolower($this->Type);
-        $fileContent = file_get_contents(str_replace('{VideoId}', $videoId, static::config()->thumbnail_links[$type]));
+        $fileContent = file_get_contents(str_replace('{VideoId}', $videoId, VideoSliderItem::config()->thumbnail_links[$type]));
 
-        if ($type == 'vimeo') {
-            $fileContent = file_get_contents($fileContent[0]['thumbnail_large']);
+        switch ($type) {
+            case 'vimeo':
+                $fileContent = unserialize($fileContent);
+                $fileContent = file_get_contents($fileContent[0]['thumbnail_large']);
+                break;
+            case 'file':
+                // get picture from video (via ffmpeg)
+                if ($this->Mp4()->exists() && ($fileUrl = $this->getMp4VideoUrl())) {
+
+                }
+
+                break;
         }
 
         if ($fileContent) {
@@ -364,6 +371,64 @@ class VideoSliderItem extends BaseSliderItem {
                 }
             }
         }
+    }
+
+    public function renderVideo() {
+        $config = array(
+            'ffmpeg.bin' => BlocksUtility::whichFFMPEG(),
+            'qt-faststart.bin' => '/usr/local/bin/qt-faststart',
+        );
+        $html5 = new \Html5Video\Html5Video($config);
+
+        $source = Controller::join_links(
+            Director::baseFolder(),
+            $this->Mp4()->getFilename()
+        );
+
+        $destination = Controller::join_links(
+            Director::baseFolder(),
+            '/assets/test.webm'
+        );
+
+        // target format is the file extension of $targetVideo. One of mp4, webm, or ogg
+        $profileName = '720p-hd'; // other profiles are listed in src/Html5Video/profiles
+        $html5->convert($source, $destination, $profileName);
+    }
+
+    public function getVideoOptions() {
+        $options = [];
+
+        if ($this->Type == 'File') {
+            $options = [
+                'videoTypes' => [
+                    'mp4'  => $this->getMp4VideoUrl(),
+                    'webm' => $this->getWebMVideoUrl(),
+                    'ogg'  => $this->getOggVideoUrl(),
+                ],
+            ];
+        } else {
+            $options['embed'] = $this->getEmbedLink();
+        }
+
+        $options = array_merge([
+            'autoPlay'   => (boolean) $this->AutoPlay,
+            'type'       => $this->getVideoType(),
+            'coverImage' => (($cover = $this->getCoverImage()) ? $cover->getAbsoluteURL() : false),
+        ], $options);
+
+        return Convert::raw2att(Convert::array2json($options));
+    }
+
+}
+
+class VideoBlock_Controller extends Block_Controller {
+
+    public function init() {
+        if (VideoBlock::config()->load_javascript_plugin) {
+            Requirements::javascript(CONTENT_BLOCKS_DIR."/assets/javascript/video-block.js");
+        }
+
+        parent::init();
     }
 
 }

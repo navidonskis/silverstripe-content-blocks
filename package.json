@@ -30,6 +30,7 @@
     "gulp-sass": "^3.1.0",
     "gulp-sourcemaps": "^2.4.1",
     "gulp-uglify": "^2.1.2",
-    "susy": "^2.2.12"
+    "susy": "^2.2.12",
+    "video.js": "^6.2.4"
   }
 }
